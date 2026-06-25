@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'usuarios',
-    'exemplo',
+    
 ]
 
 MIDDLEWARE = [
@@ -80,7 +80,7 @@ DATABASES = {
         'NAME': 'postgres', #nome do banco
         'USER': 'professor', #usuario
         'PASSWORD': 'professor', #senha
-        'HOSt': 'database-1.cofefkfnwzpi.us-east-1.rds.amazonaws.com', #Endereço de AWS
+        'HOST': 'database-1.cofefkfnwzpi.us-east-1.rds.amazonaws.com', #Endereço de AWS
         'PORT': '5432' #Porta do PostgreSQL
 
     }
@@ -122,3 +122,57 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+
+# python --version
+# Mostra a versão do Python instalada no computador.
+
+# python -m pip install django
+# Instala o Django no Python.
+
+# python -m django --version
+# Mostra a versão do Django instalada.
+
+# python -m django startproject meu_projeto .
+# Cria um projeto Django na pasta atual.
+# O ponto final faz o projeto ser criado dentro da pasta que já está aberta.
+
+# python manage.py runserver
+# Inicia o servidor local do Django.
+# Depois disso, o projeto abre em http://127.0.0.1:8000/
+
+# python manage.py startapp usuarios
+# Cria um app chamado usuarios.
+# Esse app guarda models, views, admin, migrations etc.
+
+# python manage.py makemigrations
+# Cria os arquivos de migration com base nas alterações feitas no models.py.
+# É como preparar as mudanças do banco.
+
+# python manage.py migrate
+# Aplica as migrations no banco de dados.
+# Ou seja, cria ou atualiza as tabelas no banco.
+
+# python manage.py createsuperuser
+# Cria um usuário administrador para acessar o painel /admin do Django.
+
+# python manage.py shell
+# Abre o terminal interativo do Django.
+# Serve para testar comandos Python usando as configurações do projeto.
+
+# from django.conf import settings
+# Importa as configurações do Django dentro do shell.
+
+# settings.DATABASES
+# Mostra qual banco de dados o Django está usando.
+
+# exit()
+# Sai do shell interativo do Django.
+
+# python manage.py diffsettings | findstr HOST
+# Mostra configurações alteradas que tenham a palavra HOST.
+# Usamos para conferir se o Django estava lendo o HOST correto do banco.
+
+# python manage.py dbshell
+# Tenta abrir o terminal do banco de dados configurado no Django.
+
