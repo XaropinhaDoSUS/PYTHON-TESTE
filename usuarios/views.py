@@ -57,41 +57,14 @@ def cadastrar_usuario(request):
     }, status=405)
 
 
-
-#Metodo POST
-@csrf_exempt #serve pra testar rota no json sem bloqueios
-def login_usuario(request): #Criando função de login
-    if request.method == "POST":
-        dados = json.loads(request.body) #enviando dados em json
-        login = dados["login"]
-        senha = dados["senha"]
-
-        usuario = Usuario.objects.filter(login=login, senha=senha).first() #procura os dados na tabela de objetos 
-
-        if usuario:
-            request.session["usuario_cpf"] = str(usuario.cpf) #guarda o cpf do usuario
-
-            return JsonResponse({
-                "mensagem": "Login realizado com sucesso",
-                "usuario": usuario.nome
-            })
-        else:
-            return JsonResponse({"erro": "Login ou senha inválidos"}, status=401)
-
-    return JsonResponse({"erro": "Método não permitido"}, status=405)
-
-
-
 #Metodo PUT 
 @csrf_exempt
 def atualizar_usuario(request):
-    if "usuario_cpf" not in request.session:
-        return JsonResponse({"erro": "Você precisa estar logado"}, status=401) #se o cpf n estiver na sessão, o usuario precisa realizar login
-       
+     
     if request.method == "PUT": #Verifica se o metodo de atualizar esta sendo utilizado
         dados = json.loads(request.body)
 
-        cpf_logado = request.session["usuario_cpf"]
+        cpf_logado = dados["cpf"] 
         usuario = Usuario.objects.filter(cpf=cpf_logado).first() #procura o usuario com o cpf do login, para ele editar ESTE usuario
 
         if usuario is None:
@@ -120,33 +93,27 @@ def atualizar_usuario(request):
 
     return JsonResponse({"erro": "Método não permitido"}, status=405)
 
-
-
 # deletar
 @csrf_exempt
 def deletar_usuario(request):
-    #verificação
-    if "usuario_cpf" not in request.session:
-        return JsonResponse({"erro": "Você precisa estar logado"}, status=401)
-
+   
     if request.method == "DELETE":
-        cpf_logado = request.session["usuario_cpf"] #requisição delete
+        dados = json.loads(request.body)
 
-        usuario = Usuario.objects.filter(cpf=cpf_logado).first() #assim como o atualizar só é possivel deletar pelo cpf logado
+        cpf_logado = dados["cpf"]
+        usuario = Usuario.objects.filter(cpf=cpf_logado).first()
 
         if usuario is None: 
             return JsonResponse({"erro": "Usuário não encontrado"}, status=404) #caso o usuario não seja encontrado 
 
         usuario.delete()
-        request.session.flush()
 
         return JsonResponse({
             "mensagem": "Usuário deletado com sucesso" #se a condição estiver correta, o usuario é deletado 
         })
 
     return JsonResponse({"erro": "Método não permitido"}, status=405)
-
-
+      
 
 # ==========================
 # CAMINHOS PARA TESTAR NO POSTMAN
