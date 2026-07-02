@@ -143,6 +143,8 @@ STATIC_URL = 'static/'
 # Inicia o servidor local do Django.
 # Depois disso, o projeto abre em http://127.0.0.1:8000/
 
+#É ESSE AQUI DEBAIXO P CRIAR AS PASTAS DAS TABELAS-------------------------------------------------------
+
 # python manage.py startapp usuarios
 # Cria um app chamado usuarios.
 # Esse app guarda models, views, admin, migrations etc.
