@@ -125,11 +125,6 @@ def deletar_usuario(request):
 # Body > raw > JSON
 # Serve para cadastrar um novo usuário no banco.
 
-# LOGIN DO USUÁRIO
-# Método: POST
-# URL: http://127.0.0.1:8000/usuarios/login/
-# Body > raw > JSON
-# Serve para fazer login e salvar o CPF do usuário na sessão.
 
 # ATUALIZAR USUÁRIO LOGADO
 # Método: PUT
