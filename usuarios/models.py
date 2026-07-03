@@ -52,7 +52,7 @@ class Estudante(models.Model): #mapeando a tabela de estudante do banco
         null=True,
         blank=True
     )
-
+ 
     ano_ingresso = models.IntegerField(null=True, blank=True)
 
     def __str__(self):   
@@ -63,8 +63,72 @@ class Estudante(models.Model): #mapeando a tabela de estudante do banco
         managed = False #fala para o Django não tentar criar essa tabela, porque ela já existe no banco
 
 class Curso(models.Model):
-    #ta faltando criar esse model ainda
+
+    GRAU_CHOICES = [
+        ("Bacharelado", "Bacharelado"),
+        ("Licenciatura Plena", "Licenciatura Plena"),
+    ]
+
+    NIVEL_CHOICES = [
+        ("Doutorado", "Doutorado"),
+        ("Mestrado", "Mestrado"),
+        ("Graduação", "Graduação"),
+        ("Lato", "Lato"),
+    ]
+
+    TURNO_CHOICES = [
+        ("Matutino", "Matutino"),
+        ("Vespertino", "Vespertino"),
+        ("Noturno", "Noturno"),
+        ("Turno Indefinido", "Turno Indefinido"),
+    ]
+
+
+
+    idcurso = models.AutoField(primary_key=True, db_column="idcurso") #verificar se é minusculo mesmo 
+
+    nome = models.CharField(max_length=100)
+
+    grau = models.CharField(
+        max_length=20,
+        choices = GRAU_CHOICES,
+        null=True,
+        blank=True
+    )
+
+    turno = models.CharField(
+        max_length=20,
+        choices = TURNO_CHOICES,
+    )
+
+    campus = models.CharField(max_length=100, null=True, blank=True)
+
+    nivel = models.CharField(
+        max_length=20,
+        choices = NIVEL_CHOICES,
+        null=True,
+        blank=True
+    )
+
+    
+
+    def __str__(self):   
+        return self.nome #No terminal do django vai aparecer o nome do curso
+
+    class Meta:
+        db_table = '"universidade"."curso"' #fala para o Django usar a tabela curso dentro do schema universidade
+        managed = False #fala para o Django não tentar criar essa tabela, porque ela já existe no banco
+        constraints = [
+            models.UniqueConstraint(
+                fields=["nome", "turno", "campus", "nivel"],
+                name = "uq_curso"
+            )
+        ]
+
+
+
 
 class Vinculo(models.Model):
-    #tb falta criar esse model
+    idVinculo = models.AutoField(primary_key=True, db_column="idVinculo")
 
+    
